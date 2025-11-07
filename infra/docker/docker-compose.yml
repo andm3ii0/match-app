@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../../
+      dockerfile: infra/docker/backend.Dockerfile
+    container_name: match-backend
+    restart: always
+    env_file:
+      - ../../backend/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - matchnet
+
+  db:
+    image: postgres:15-alpine
+    container_name: match-db
+    restart: always
+    environment:
+      POSTGRES_USER: match_user
+      POSTGRES_PASSWORD: match_pass
+      POSTGRES_DB: match_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - matchnet
+
+volumes:
+  pgdata:
+
+networks:
+  matchnet:
+    driver: bridge
