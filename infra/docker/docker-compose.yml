@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_USER: match_user
       POSTGRES_PASSWORD: match_pass
-      POSTGRES_DB: match_db
+      POSTGRES_DB: matchapp
     ports:
       - "5432:5432"
     volumes:
